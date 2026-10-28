@@ -1,0 +1,293 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Langga 💗</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: 25px 0;
+            background: linear-gradient(
+                135deg, #160b2e, #632b75,
+                #c04c87, #24113e
+            );
+            background-size: 300% 300%;
+            animation: gradient 8s ease infinite;
+        }
+
+        .card {
+            position: relative;
+            z-index: 1;
+            width: 90%;
+            max-width: 450px;
+            padding: 35px 25px;
+            text-align: center;
+            border: 1px solid #ffffff45;
+            border-radius: 25px;
+            background: #ffffff16;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 40px #ff8bd655;
+            animation: appear 1.2s ease;
+        }
+
+        .heart {
+            font-size: 65px;
+            margin-bottom: 20px;
+            animation: heartbeat 1.5s infinite;
+            filter: drop-shadow(0 0 15px #ff7eb8);
+        }
+
+        h1 {
+            font-size: clamp(22px, 5vw, 30px);
+            margin-bottom: 18px;
+            line-height: 1.5;
+            text-shadow: 0 0 15px #ffb5dd;
+        }
+
+        p {
+            color: #ffe5f3;
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .photo-button {
+            display: inline-block;
+            padding: 14px 25px;
+            border-radius: 30px;
+            color: #70224f;
+            background: linear-gradient(
+                135deg, #fff0f7, #ffb5dd
+            );
+            font-size: 15px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 5px 20px #ff8bc755;
+            transition: 0.3s;
+        }
+
+        .photo-button:hover {
+            transform: scale(1.07);
+            box-shadow: 0 0 25px #ffb5dd;
+        }
+
+        .footer {
+            margin-top: 25px;
+            font-size: 12px;
+            color: #ffd8ed;
+        }
+
+        /* GLOWING MUSIC PLAYER */
+        .music-player {
+            margin-top: 25px;
+            padding: 15px 12px;
+            border: 1px solid #ffb5dd80;
+            border-radius: 20px;
+            background: linear-gradient(
+                135deg,
+                #ffffff20,
+                #ff8bc720,
+                #a855f720
+            );
+            box-shadow:
+                0 0 15px #ff8bc740,
+                inset 0 0 12px #ffffff10;
+            backdrop-filter: blur(10px);
+            animation: music-glow 3s ease-in-out infinite alternate;
+        }
+
+        .music-title {
+            color: #ffe5f3;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            text-shadow: 0 0 10px #ff8bc7;
+        }
+
+        .music-icon {
+            display: inline-block;
+            margin-right: 5px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        .music-player audio {
+            display: block;
+            width: 100%;
+            height: 40px;
+            border-radius: 30px;
+            accent-color: #d946a6;
+        }
+
+        .music-note {
+            margin-top: 10px;
+            color: #ffd8ed;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        /* FLOATING HEARTS */
+        .floating-heart {
+            position: fixed;
+            bottom: -50px;
+            font-size: 25px;
+            opacity: 0;
+            pointer-events: none;
+            animation: float-up 7s linear infinite;
+        }
+
+        .floating-heart:nth-of-type(1) {
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-heart:nth-of-type(2) {
+            left: 30%;
+            animation-delay: 2s;
+        }
+
+        .floating-heart:nth-of-type(3) {
+            left: 70%;
+            animation-delay: 1s;
+        }
+
+        .floating-heart:nth-of-type(4) {
+            left: 90%;
+            animation-delay: 3s;
+        }
+
+        @keyframes gradient {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(25px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-110vh) rotate(35deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes music-glow {
+            from {
+                box-shadow: 0 0 10px #ff8bc740;
+            }
+            to {
+                box-shadow:
+                    0 0 25px #ff8bc780,
+                    0 0 40px #a855f740;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .card {
+                padding: 28px 18px;
+            }
+
+            .music-title {
+                letter-spacing: 1px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- FLOATING HEARTS -->
+    <span class="floating-heart">💗</span>
+    <span class="floating-heart">💖</span>
+    <span class="floating-heart">💕</span>
+    <span class="floating-heart">💜</span>
+
+    <!-- MAIN CARD -->
+    <div class="card">
+
+        <div class="heart">💗</div>
+
+        <h1>PWEDE IMONG PICTURE NAPUD LANGGA? 🥹</h1>
+
+        <p>
+            Please, langga? One more picture, please. 💕
+            It would make my day!
+        </p>
+
+        <a href="last.html" class="photo-button">
+            BACK TO SH8t 📸 💗
+        </a>
+
+        <div class="footer">
+            Made with love ♡ just for you
+        </div>
+
+        <!-- BACKGROUND MUSIC -->
+        <div class="music-player">
+
+            <div class="music-title">
+                <span class="music-icon">🎵</span>
+                NOW PLAYING 💗
+            </div>
+
+            <audio autoplay loop controls>
+                <source
+                    src="MOONLIGHT 🌕 The BEST Monkey RIZZ Edit You'll EVER See (4K).mp3"
+                    type="audio/mpeg">
+                Your browser does not support audio.
+            </audio>
+
+            <div class="music-note">
+                ♪ MADE WITH LOVE ♡ ♪
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

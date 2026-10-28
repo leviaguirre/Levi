@@ -1,0 +1,806 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>itslev1 | My Personal Biography</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            padding: 25px 12px;
+            color: white;
+            font-family: Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, #30204d, transparent 40%),
+                radial-gradient(circle at bottom right, #402039, transparent 35%),
+                #0b0b10;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        .page {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .profile-card,
+        .biography,
+        .gallery-card {
+            border: 1px solid #393342;
+            border-radius: 22px;
+            background: rgba(24, 22, 33, 0.95);
+            box-shadow: 0 15px 40px #0005;
+        }
+
+        .profile-card {
+            padding: 30px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .profile-photo {
+            width: 130px;
+            height: 130px;
+            flex-shrink: 0;
+            object-fit: cover;
+            border: 4px solid #b18cff;
+            border-radius: 50%;
+            padding: 3px;
+        }
+
+        .username {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 0 8px;
+            font-size: 30px;
+        }
+
+        .verified {
+            color: #d5baff;
+            font-size: 22px;
+        }
+
+        .name {
+            color: #c6bfd2;
+            margin-bottom: 15px;
+        }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .bio {
+            line-height: 1.7;
+        }
+
+        .handle {
+            color: #c19aff;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .buttons a {
+            flex: 1;
+            padding: 12px;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            background: #302b3d;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .buttons a:hover {
+            background: #594376;
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            margin: 30px 0 15px;
+            color: #d6c3ff;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .highlights {
+            display: flex;
+            gap: 22px;
+            overflow-x: auto;
+            padding: 5px 2px 12px;
+        }
+
+        .highlight {
+            flex-shrink: 0;
+            width: 78px;
+            color: #ddd5e9;
+            text-align: center;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .highlight-circle {
+            width: 74px;
+            height: 74px;
+            padding: 3px;
+            margin: 0 auto 8px;
+            overflow: hidden;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #b18cff, #ff8bc7);
+            transition: 0.3s;
+        }
+
+        .highlight:hover .highlight-circle {
+            transform: scale(1.08);
+        }
+
+        .highlight-circle img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            border: 3px solid #181621;
+            border-radius: 50%;
+        }
+
+        .new-circle {
+            display: grid;
+            place-items: center;
+            color: white;
+            font-size: 35px;
+            background: #302b3d;
+            border: 1px solid #554969;
+            border-radius: 50%;
+        }
+
+        .gallery-card {
+            margin-top: 25px;
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-bottom: 1px solid #393342;
+        }
+
+        .tab {
+            padding: 16px 5px;
+            color: #aaa0bb;
+            text-align: center;
+            text-decoration: none;
+            font-size: 23px;
+        }
+
+        .tab.active {
+            color: #d0b5ff;
+            border-bottom: 2px solid #b18cff;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 5px;
+            padding: 5px;
+        }
+
+        /* GALLERY PHOTOS */
+        .photo-tile {
+            display: block;
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1 / 1;
+            border-radius: 7px;
+            background: #292435;
+        }
+
+        .photo-tile img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            transition: transform 0.35s, opacity 0.35s;
+        }
+
+        .photo-tile:hover img {
+            transform: scale(1.08);
+            opacity: 0.8;
+        }
+
+        /* BIOGRAPHY */
+        .biography {
+            margin-top: 30px;
+            padding: 30px;
+        }
+
+        .eyebrow {
+            color: #c19aff;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 12px;
+        }
+
+        .biography h1 {
+            text-align: center;
+            font-size: 32px;
+        }
+
+        .title-line {
+            width: 70px;
+            height: 4px;
+            margin: 15px auto 30px;
+            border-radius: 5px;
+            background: linear-gradient(90deg, #b18cff, #ff8bc7);
+        }
+
+        .bio-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .bio-item {
+            padding: 20px;
+            background: #211e2c;
+            border: 1px solid #393342;
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+
+        .bio-item:hover {
+            border-color: #a985e7;
+            transform: translateY(-3px);
+        }
+
+        .bio-item h2 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #d8c5ff;
+        }
+
+        .bio-item p {
+            color: #c6c0d0;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        .bio-item a {
+            color: #c19aff;
+            font-weight: bold;
+        }
+
+        footer {
+            padding: 25px 0 5px;
+            color: #8d849d;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        /* FULL-SCREEN PHOTO VIEWER */
+        .photo-viewer {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            inset: 0;
+            padding: 65px 15px 25px;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.96);
+        }
+
+        .photo-viewer:target {
+            display: flex;
+        }
+
+        .photo-viewer img {
+            max-width: 95%;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 0 35px #000;
+        }
+
+        .close-viewer {
+            position: absolute;
+            top: 12px;
+            right: 22px;
+            color: white;
+            font-size: 40px;
+            text-decoration: none;
+        }
+
+        .close-viewer:hover {
+            color: #c19aff;
+        }
+
+        .viewer-caption {
+            position: absolute;
+            bottom: 15px;
+            color: #ccc;
+            font-size: 13px;
+        }
+
+        /* STORY VIEWER */
+        .story-viewer {
+            display: none;
+            position: fixed;
+            z-index: 1100;
+            inset: 0;
+            padding: 20px;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.97);
+        }
+
+        .story-viewer:target {
+            display: flex;
+        }
+
+        .story-content {
+            width: min(420px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 15px;
+            text-align: center;
+            background: #1d1927;
+            border: 1px solid #514264;
+            border-radius: 18px;
+        }
+
+        .story-content img {
+            display: block;
+            max-width: 100%;
+            max-height: 60vh;
+            margin: auto;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .story-content h2 {
+            color: #d5baff;
+        }
+
+        .story-content audio {
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .story-close {
+            display: block;
+            margin: 12px 0;
+            color: white;
+            text-align: right;
+            text-decoration: none;
+            font-size: 28px;
+        }
+
+        @media (max-width: 650px) {
+            body {
+                padding: 10px;
+            }
+
+            .profile-card,
+            .biography {
+                padding: 20px 15px;
+            }
+
+            .profile-header {
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .profile-photo {
+                width: 85px;
+                height: 85px;
+            }
+
+            .username {
+                font-size: 23px;
+            }
+
+            .stats {
+                gap: 8px 12px;
+                font-size: 12px;
+            }
+
+            .highlights {
+                gap: 13px;
+            }
+
+            .highlight {
+                width: 65px;
+            }
+
+            .highlight-circle {
+                width: 62px;
+                height: 62px;
+            }
+
+            .photo-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 3px;
+                padding: 3px;
+            }
+
+            .bio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .biography h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<main class="page">
+
+    <!-- PROFILE -->
+    <section class="profile-card" id="profile">
+        <div class="profile-header">
+            <img
+                src="488778940_1680939593306651_6473034808056636824_n.jpg"
+                alt="My Profile Photo"
+                class="profile-photo"
+            >
+
+            <div>
+                <h1 class="username">
+                    itslev1 <span class="verified">✿</span>
+                </h1>
+
+                <div class="name">Mr. Loko</div>
+
+                <div class="stats">
+                    <span><b>10000</b> posts</span>
+                    <span><b>43443454</b> followers</span>
+                    <span><b>following</b> ikaw</span>
+                </div>
+
+                <div class="bio">
+                    Peace<br>
+                    <span class="handle">@itslev1</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <a href="#biography">My Biography</a>
+            <a href="https://open.spotify.com/" target="_blank"
+               rel="noopener noreferrer">Spotify ♫</a>
+        </div>
+
+        <!-- STORY HIGHLIGHTS -->
+        <p class="section-title">Story Highlights</p>
+
+        <div class="highlights">
+            <a class="highlight" href="#story-me">
+                <div class="highlight-circle">
+                    <img src="Messenger_creation_A63D1443-F6F1-456C-A800-9ABFEC122ADA.jpeg" alt="Me">
+                </div>
+                Me
+            </a>
+
+            <a class="highlight" href="#story-life">
+                <div class="highlight-circle">
+                    <img src="received_820279074028446.jpeg" alt="Life">
+                </div>
+                Myself
+            </a>
+
+            <a class="highlight" href="#story-hobbies">
+                <div class="highlight-circle">
+                    <img src="received_739601241738698.jpeg" alt="Hobbies">
+                </div>
+                I
+            </a>
+
+            <a class="highlight" href="#story-school">
+                <div class="highlight-circle">
+                    <img src="IMG_20260726_193108_140.jpg" alt="School">
+                </div>
+                Me Again
+            <a class="highlight" href="side.html">
+                <div class="highlight-circle new-circle">+</div>
+                 New
+            </a>
+        </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery-card" id="gallery">
+        <div class="tabs">
+            <a class="tab active" href="#gallery" aria-label="Posts">▦</a>
+            <a class="tab" href="#gallery" aria-label="Favorites">♡</a>
+            <a class="tab" href="#gallery" aria-label="Reposts">⟳</a>
+            <a class="tab" href="#gallery" aria-label="Tagged">◎</a>
+        </div>
+
+        <div class="photo-grid">
+            <!-- PHOTO 1 -->
+            <a class="photo-tile" href="#photo-1">
+                <img
+                    src="Messenger_creation_A63D1443-F6F1-456C-A800-9ABFEC122ADA.jpeg"
+                    alt="Gallery Photo 1"
+                >
+            </a>
+
+            <!-- PHOTO 2 -->
+            <a class="photo-tile" href="#photo-2">
+                <img src="IMG_20260827_105902_983.jpg"
+                     alt="Gallery Photo 2">
+            </a>
+
+            <!-- PHOTO 3 -->
+            <a class="photo-tile" href="#photo-3">
+                <img src="received_709786091550515.jpeg"
+                     alt="Gallery Photo 3">
+            </a>
+
+            <!-- PHOTO 4 -->
+            <a class="photo-tile" href="#photo-4">
+                <img src="received_978466944968536.jpeg"
+                     alt="Gallery Photo 4">
+            </a>
+
+            <!-- PHOTO 5 -->
+            <a class="photo-tile" href="#photo-5">
+                <img src="IMG_20260927_141542_653.jpg" alt="Gallery Photo 5">
+            </a>
+
+            <!-- PHOTO 6 -->
+            <a class="photo-tile" href="#photo-6">
+                <img src="received_2661634894295398.jpeg" alt="Gallery Photo 6">
+            </a>
+
+            <!-- PHOTO 7 -->
+            <a class="photo-tile" href="#photo-7">
+                <img src="IMG_20260927_140020_530.jpg" alt="Gallery Photo 7">
+            </a>
+
+            <!-- PHOTO 8 -->
+            <a class="photo-tile" href="#photo-8">
+                <img src="IMG_20260927_134244_527.jpg" alt="Gallery Photo 8">
+            </a>
+
+            <!-- PHOTO 9 -->
+            <a class="photo-tile" href="#photo-9">
+                <img src="IMG_20260204_221315_301~2.jpg" alt="Gallery Photo 9">
+            </a>
+
+            <!-- PHOTO 10 -->
+            <a class="photo-tile" href="#photo-10">
+                <img src="IMG_20260107_100807_198~3.jpg" alt="Gallery Photo 10">
+            </a>
+
+            <!-- PHOTO 11 -->
+            <a class="photo-tile" href="#photo-11">
+                <img src="IMG_20260526_164310_300.webp" alt="Gallery Photo 11">
+            </a>
+
+            <!-- PHOTO 12 -->
+            <a class="photo-tile" href="#photo-12">
+                <img src="IMG_20260526_185227_312.jpg" alt="Gallery Photo 12">
+            </a>
+        </div>
+    </section>
+
+    <!-- BIOGRAPHY -->
+    <section class="biography" id="biography">
+        <p class="eyebrow">A little about me</p>
+        <h1>My Personal Biography</h1>
+        <div class="title-line"></div>
+
+        <div class="bio-grid">
+            <article class="bio-item">
+                <h2>✦ About Me</h2>
+                <p>
+                    My name is Levi Mark Aguirre, 19 years old.
+                    I am currently a second-year student taking
+                    Bachelor of Science in Information Technology.
+                </p>
+            </article>
+
+            <article class="bio-item">
+                <h2>⌘ My Educational Background</h2>
+                <p>
+                    I am currently studying at Cebu Technological
+                    University – Argao Campus. I chose BSIT because
+                    I am interested in technology and computers.
+                </p>
+            </article>
+
+            <article class="bio-item">
+                <h2>✧ My Hobbies and Interests</h2>
+                <p>
+                    My hobbies include playing outdoor sports and
+                    video games. I also enjoy learning new things
+                    about technology and computers.
+                </p>
+            </article>
+
+            <article class="bio-item">
+                <h2>↗ My Future Goal</h2>
+                <p>
+                    In the future, I want to become a successful
+                    IT professional. My goal is to use my knowledge
+                    and skills to help solve problems through technology.
+                </p>
+            </article>
+
+            <article class="bio-item">
+                <h2>♫ My Favorite Website</h2>
+                <p>
+                    One website that I visit is
+                    <a href="https://open.spotify.com/"
+                       target="_blank" rel="noopener noreferrer">Spotify</a>.
+                </p>
+            </article>
+
+            <article class="bio-item">
+                <h2>♡ My Personal Motto</h2>
+                <p>
+                    Keep learning, stay humble, and keep moving forward.
+                </p>
+            </article>
+        </div>
+    </section>
+
+    <footer>Made with care · itslev1</footer>
+</main>
+
+<!-- GALLERY PHOTO VIEWERS -->
+
+<div class="photo-viewer" id="photo-1">
+    <a class="close-viewer" href="#gallery" aria-label="Close">×</a>
+    <img src="Messenger_creation_A63D1443-F6F1-456C-A800-9ABFEC122ADA.jpeg"
+         alt="Gallery Photo 1">
+    <p class="viewer-caption"> Photo 1</p>
+</div>
+
+<div class="photo-viewer" id="photo-2">
+    <a class="close-viewer" href="#gallery" aria-label="Close">×</a>
+    <img src="IMG_20260827_105902_983.jpg" alt="Gallery Photo 2">
+    <p class="viewer-caption"> Photo 2</p>
+</div>
+
+<div class="photo-viewer" id="photo-3">
+    <a class="close-viewer" href="#gallery" aria-label="Close">×</a>
+    <img src="received_709786091550515.jpeg" alt="Gallery Photo 3">
+    <p class="viewer-caption"> Photo 3</p>
+</div>
+
+<div class="photo-viewer" id="photo-4">
+    <a class="close-viewer" href="#gallery" aria-label="Close">×</a>
+    <img src="received_978466944968536.jpeg" alt="Gallery Photo 4">
+    <p class="viewer-caption"> Photo 4</p>
+</div>
+
+<div class="photo-viewer" id="photo-5">
+    <a class="close-viewer" href="#gallery" aria-label="Close">×</a>
+    <img src="IMG_20260927_141542_653.jpg" alt="Gallery Photo 5">
+    <p class="viewer-caption"> Photo 5</p>
+</div>
+
+<div class="photo-viewer" id="photo-6">
+    <a class="close-viewer" href="#gallery" aria-label="Close">×</a>
+    <img src="received_2661634894295398.jpeg" alt="Gallery Photo 6">
+    <p class="viewer-caption"> Photo 6</p>
+</div>
+
+<div class="photo-viewer" id="photo-7">
+    <a class="close-viewer" href="#gallery" aria-label="Close">×</a>
+    <img src="IMG_20260927_140020_530.jpg" alt="Gallery Photo 7">
+    <p class="viewer-caption"> Photo 7</p>
+</div>
+
+<div class="photo-viewer" id="photo-8">
+    <a class="close-viewer" href="#gallery" aria-label="Close">×</a>
+    <img src="IMG_20260927_134244_527.jpg" alt="Gallery Photo 8">
+    <p class="viewer-caption"> Photo 8</p>
+</div>
+
+<div class="photo-viewer" id="photo-9">
+    <a class="close-viewer" href="#gallery" aria-label="Close">×</a>
+    <img src="IMG_20260204_221315_301~2.jpg" alt="Gallery Photo 9">
+    <p class="viewer-caption"> Photo 9</p>
+</div>
+
+<div class="photo-viewer" id="photo-10">
+    <a class="close-viewer" href="#gallery" aria-label="Close">×</a>
+    <img src="IMG_20260107_100807_198~3.jpg" alt="Gallery Photo 10">
+    <p class="viewer-caption"> Photo 10</p>
+</div>
+
+<div class="photo-viewer" id="photo-11">
+    <a class="close-viewer" href="#gallery" aria-label="Close">×</a>
+    <img src="IMG_20260526_164310_300.webp" alt="Gallery Photo 11">
+    <p class="viewer-caption"> Photo 11</p>
+</div>
+
+<div class="photo-viewer" id="photo-12">
+    <a class="close-viewer" href="#gallery" aria-label="Close">×</a>
+    <img src="IMG_20260526_185227_312.jpg" alt="Gallery Photo 12">
+    <p class="viewer-caption"> Photo 12</p>
+</div>
+
+<!-- STORY VIEWERS -->
+
+<div class="story-viewer" id="story-me">
+    <div class="story-content">
+        <a class="story-close" href="#profile" aria-label="Close">×</a>
+        <h2>Me</h2>
+        <img src="Messenger_creation_A63D1443-F6F1-456C-A800-9ABFEC122ADA.jpeg" alt="Me Story">
+        <audio controls>
+            <source src="Alpas (Tatot and Dhyon) - Ako Na Lang by Zia (Acoustic Cover w Lyrics) - Kaya Camp.mp3" type="audio/mpeg">
+            Your browser does not support audio.
+        </audio>
+    </div>
+</div>
+
+<div class="story-viewer" id="story-life">
+    <div class="story-content">
+        <a class="story-close" href="#profile" aria-label="Close">×</a>
+        <h2>My Self</h2>
+        <img src="received_820279074028446.jpeg" alt="Life Story">
+        <audio controls>
+            <source src="Daniel Caesar - Loose (Lyrics).mp3" type="audio/mpeg">
+            Your browser does not support audio.
+        </audio>
+    </div>
+</div>
+
+<div class="story-viewer" id="story-hobbies">
+    <div class="story-content">
+        <a class="story-close" href="#profile" aria-label="Close">×</a>
+        <h2>I</h2>
+        <img src="received_739601241738698.jpeg" alt="Hobbies Story">
+        <audio controls>
+            <source src="H.E.R. - Best Part (Lyrics) Ft. Daniel Caesar.mp3" type="audio/mpeg">
+            Your browser does not support audio.
+        </audio>
+    </div>
+</div>
+
+<div class="story-viewer" id="story-school">
+    <div class="story-content">
+        <a class="story-close" href="#profile" aria-label="Close">×</a>
+        <h2>Me Again</h2>
+        <img src="IMG_20260726_193108_140.jpg" alt="School Story">
+        <audio controls>
+            <source src="NIKI - lowkey (Lyrics).mp3" type="audio/mpeg">
+            Your browser does not support audio.
+        </audio>
+    </div>
+</div>
+
+</body>
+</html>
